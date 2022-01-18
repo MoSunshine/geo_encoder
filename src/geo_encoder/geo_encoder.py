@@ -38,7 +38,7 @@ class geo_encoder():
             
     def encode_location(self,file):
         ###build search string###
-        dataset = self.read_dataset()
+        dataset = self.read_dataset(file)
         print(dataset)
         dataset["search_url"] = "https://nominatim.openstreetmap.org/search?"+"street="+dataset["street"]+"&city="+dataset["city"]+"&country=Germany&postalcode="+dataset["zip_code"]+"&addressdetails=1&extratags=1&namedetails=1&format=json"
         url_list = dataset["search_url"].tolist()
@@ -57,6 +57,8 @@ class geo_encoder():
             except Exception as e:
                 self.logger.error('Error reading url '+url + " of file "+ file)
                 self.logger.error(traceback.format_exc())
+                result_list_lat.append('no data')
+                result_list_lon.append('no data')
         dataset["lat"] = result_list_lat
         dataset["lon"] = result_list_lon
         dataset.to_csv("../results/" +file+"_endocded.csv",encoding="utf-8",sep=",",index=False)
