@@ -3,7 +3,7 @@
 Created on Wed Jan 12 11:36:10 2022
 
 @author: moritz.wegener- moritz.wegener@uni-koeln.de
-Class to get the latitude and longitude of a datset based on the adress, zip code, country and city
+Class to get the latitude and longitude of a datset based on the adress, zip code, country.
 
 """
 import pandas as pd
@@ -27,7 +27,7 @@ class geo_encoder():
     
     
     def read_dataset(self,file):
-        path = "../"+file
+        path = "../input_data/"+file
         try:
             dataset = pd.read_csv(path, sep=",", encoding="utf-8", dtype={"street":str,"zip_code":str,"country":str,"city":str})
             return dataset
@@ -40,7 +40,7 @@ class geo_encoder():
         ###build search string###
         dataset = self.read_dataset(file)
         print(dataset)
-        dataset["search_url"] = "https://nominatim.openstreetmap.org/search?"+"street="+dataset["street"]+"&city="+dataset["city"]+"&country=Germany&postalcode="+dataset["zip_code"]+"&addressdetails=1&extratags=1&namedetails=1&format=json"
+        dataset["search_url"] = "https://nominatim.openstreetmap.org/search?"+"street="+dataset["street"]+"&country=Germany&postalcode="+dataset["zip_code"]+"&addressdetails=1&extratags=1&namedetails=1&format=json"
         url_list = dataset["search_url"].tolist()
         result_list_lat = []
         result_list_lon= []
@@ -61,4 +61,5 @@ class geo_encoder():
                 result_list_lon.append('no data')
         dataset["lat"] = result_list_lat
         dataset["lon"] = result_list_lon
-        dataset.to_csv("../results/" +file+"_endocded.csv",encoding="utf-8",sep=",",index=False)
+        dataset.drop(["search_url"],axis=1,inplace=True)
+        dataset.to_csv("../results/" +file.replace(".csv","")+"_endocded.csv",encoding="utf-8",sep=",",index=False)

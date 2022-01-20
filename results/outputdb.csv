@@ -1,2 +1,0 @@
-street,zip_code,city,search_url,lat,lon
-stahlwerk becker 15,47877,willich,https://nominatim.openstreetmap.org/search?street=stahlwerk becker 15&city=willich&country=Germany&postalcode=47877&addressdetails=1&extratags=1&namedetails=1&format=json,51.2679708,6.529052264465877

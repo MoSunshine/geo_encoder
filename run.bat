@@ -1,3 +1,3 @@
 cd src
-python main.py shop_list_dhl.csv
+python main.py example.csv
 timeout 10
